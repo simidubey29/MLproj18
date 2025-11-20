@@ -4,10 +4,35 @@ import nltk
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 import string
+import os
 
+
+# ensure nltk_data dir is included and writable
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+nltk_data_dir = os.path.join(BASE_DIR, "nltk_data")
+if nltk_data_dir not in nltk.data.path:
+    nltk.data.path.append(nltk_data_dir)
+
+def ensure_nltk_resource(resource_name, downloader_name=None):
+    """
+    resource_name: e.g. "tokenizers/punkt" or "corpora/stopwords"
+    downloader_name: optional name to pass to nltk.download (e.g. 'punkt_tab')
+    """
+    try:
+        nltk.data.find(resource_name)
+    except LookupError:
+        to_download = downloader_name or resource_name.split('/')[-1]
+        print(f"[NLTK] Resource {resource_name} not found. Downloading '{to_download}' to {nltk_data_dir} ...")
+        nltk.download(to_download, download_dir=nltk_data_dir)
+
+# ensure we have both punkt and punkt_tab and stopwords
+ensure_nltk_resource("tokenizers/punkt", downloader_name="punkt")
+ensure_nltk_resource("tokenizers/punkt_tab/english", downloader_name="punkt_tab")
+ensure_nltk_resource("corpora/stopwords", downloader_name="stopwords")
 # ensure nltk resources
 nltk.download('stopwords')
 nltk.download('punkt')
+
 
 # load vectorizer, model, (optional) label encoder
 tfidf = pickle.load(open('vectorizer1.pkl', 'rb'))
