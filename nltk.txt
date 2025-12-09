@@ -1,4 +1,9 @@
+<<<<<<< HEAD
 import nltk
 nltk.download('punkt')
 nltk.download('stopwords')
 
+=======
+stopwords
+punkt
+>>>>>>> 390a6578c5561fad5986f6951531e4d1edda4905

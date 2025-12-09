@@ -1,6 +1,17 @@
+<<<<<<< HEAD
 streamlit==1.51.0
 nltk==3.9.2
 scikit-learn==1.7.2
 # other packages...
 
 
+=======
+streamlit==1.51.0
+nltk==3.9.2
+scikit-learn==1.7.2
+cloudpickle==2.2.1
+# other packages...
+
+
+
+>>>>>>> 390a6578c5561fad5986f6951531e4d1edda4905
