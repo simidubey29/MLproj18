@@ -1,7 +1,3 @@
-import os
-import nltk
-nltk.download("punkt")
-nltk.download("stopwords")
 
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
@@ -10,6 +6,28 @@ import string
 import streamlit as st
 import pickle
 from utils import get_spam_probability
+import nltk
+import os
+
+NLTK_DATA_DIR = os.path.join(os.getcwd(), "nltk_data")
+os.makedirs(NLTK_DATA_DIR, exist_ok=True)
+
+if NLTK_DATA_DIR not in nltk.data.path:
+    nltk.data.path.append(NLTK_DATA_DIR)
+
+def download_nltk():
+    try:
+        nltk.data.find("tokenizers/punkt")
+    except LookupError:
+        nltk.download("punkt", download_dir=NLTK_DATA_DIR)
+
+    try:
+        nltk.data.find("corpora/stopwords")
+    except LookupError:
+        nltk.download("stopwords", download_dir=NLTK_DATA_DIR)
+
+download_nltk()
+
 
 # -----------------------------
 # Load model & vectorizer
