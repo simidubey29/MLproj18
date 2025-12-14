@@ -37,8 +37,17 @@ def load_artifacts():
     model = pickle.load(open("model1.pkl", "rb"))
     vectorizer = pickle.load(open("vectorizer1.pkl", "rb"))
     return model, vectorizer
-
 model1, vectorizer1 = load_artifacts()
+
+@st.cache_resource
+def load_model():
+    tfidf = pickle.load(open("vectorizer1.pkl", "rb"))
+    model = pickle.load(open("model1.pkl", "rb"))
+    return tfidf, model,
+
+tfidf, model = load_model()
+
+
 
 user_input = st.text_area("Enter text to analyze")
 if st.button("Analyze"):
@@ -57,10 +66,7 @@ if nltk_data_dir not in nltk.data.path:
     nltk.data.path.append(nltk_data_dir)
 
 def ensure_nltk_resource(resource_name, downloader_name=None):
-    """
-    resource_name: e.g. "tokenizers/punkt" or "corpora/stopwords"
-    downloader_name: optional name to pass to nltk.download (e.g. 'punkt_tab')
-    """
+
     try:
         nltk.data.find(resource_name)
     except LookupError:
@@ -68,13 +74,11 @@ def ensure_nltk_resource(resource_name, downloader_name=None):
         print(f"[NLTK] Resource {resource_name} not found. Downloading '{to_download}' to {nltk_data_dir} ...")
         nltk.download(to_download, download_dir=nltk_data_dir)
 
-# ensure we have both punkt and punkt_tab and stopwords
+
 ensure_nltk_resource("tokenizers/punkt", downloader_name="punkt")
 ensure_nltk_resource("tokenizers/punkt_tab/english", downloader_name="punkt_tab")
 ensure_nltk_resource("corpora/stopwords", downloader_name="stopwords")
-# ensure nltk resources
-nltk.download('stopwords')
-nltk.download('punkt')
+
 
 
 # load vectorizer, model, (optional) label encoder
