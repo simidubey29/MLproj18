@@ -42,10 +42,16 @@ model1, vectorizer1 = load_artifacts()
 @st.cache_resource
 def load_model():
     tfidf = pickle.load(open("vectorizer1.pkl", "rb"))
-    model = pickle.load(open("model1.pkl", "rb"))
-    return tfidf, model,
+    return tfidf
 
-tfidf, model = load_model()
+tfidf = load_model()
+
+@st.cache_resource
+def load_model():
+    return pickle.load(open("model.pkl","rb"))
+
+model = load_model()
+
 
 
 
